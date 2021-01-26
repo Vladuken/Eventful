@@ -4,45 +4,46 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.vladuken.features.events.presentation.R
+import com.vladuken.features.events.presentation.databinding.FragmentEventListBinding
+import com.vladuken.features.events.presentation.list.adapter.EventListAdapter
 import kotlinx.coroutines.flow.collect
 
 class EventListFragment : Fragment() {
 
+    private lateinit var binding: FragmentEventListBinding
+
     private lateinit var viewModel: BaseEventListViewModel
 
+    private val adapter = EventListAdapter()
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_event_list, container, false)
+    ): View {
+        binding = FragmentEventListBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.rvEvents.adapter = adapter
+
+
         //TODO change for di
         viewModel = ViewModelProvider(this).get(EventListViewModel::class.java)
 
         lifecycleScope.launchWhenCreated {
-
             viewModel.state.collect {
                 when (it) {
-                    is BaseEventListViewModel.EventsOutput.Success -> {
-                        Toast.makeText(
-                            requireContext(),
-                            it.events.toString(),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+                    is BaseEventListViewModel.EventsOutput.Success -> adapter.submitList(it.events)
                     is BaseEventListViewModel.EventsOutput.Failure -> TODO()
                 }
             }
-
         }
     }
 }
