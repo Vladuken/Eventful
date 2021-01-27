@@ -44,6 +44,8 @@ dependencies {
 
     //Project dependencies
     implementation project(":features:events:domain")
+    //TODO Add Di
+    implementation project(":features:events:data")
 
     //Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${rootProject.versions.coroutines}"

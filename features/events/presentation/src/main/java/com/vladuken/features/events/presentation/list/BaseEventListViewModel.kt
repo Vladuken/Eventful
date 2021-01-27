@@ -11,6 +11,7 @@ abstract class BaseEventListViewModel : ViewModel() {
     sealed class EventsOutput {
         data class Success(val events: List<Event>) : EventsOutput()
         object Failure : EventsOutput()
+        object Loading : EventsOutput()
     }
 
 }

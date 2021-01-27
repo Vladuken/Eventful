@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.vladuken.features.events.data.api
+import com.vladuken.features.events.data.usecases.NetworkFetchEventsUseCase
 import com.vladuken.features.events.presentation.databinding.FragmentEventListBinding
 import com.vladuken.features.events.presentation.list.adapter.EventListAdapter
 import kotlinx.coroutines.flow.collect
@@ -35,13 +36,16 @@ class EventListFragment : Fragment() {
 
 
         //TODO change for di
-        viewModel = ViewModelProvider(this).get(EventListViewModel::class.java)
+        viewModel = EventListViewModel(NetworkFetchEventsUseCase(api))
 
         lifecycleScope.launchWhenCreated {
             viewModel.state.collect {
                 when (it) {
                     is BaseEventListViewModel.EventsOutput.Success -> adapter.submitList(it.events)
-                    is BaseEventListViewModel.EventsOutput.Failure -> TODO()
+                    is BaseEventListViewModel.EventsOutput.Failure -> {
+                    }
+                    is BaseEventListViewModel.EventsOutput.Loading -> {
+                    }
                 }
             }
         }
