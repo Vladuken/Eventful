@@ -1,4 +1,4 @@
-package com.vladuken.features.events.data
+package com.vladuken.features.events.data.di
 
 import com.vladuken.features.events.data.api.EventAPI
 import okhttp3.OkHttpClient
@@ -7,10 +7,17 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-//TODO Add DI
-private const val BASE_URL = "http://api.eventful.com/"
 
-private val client =
+fun provideRetrofit(
+    baseUrl: String,
+    client: OkHttpClient
+) = Retrofit.Builder()
+    .baseUrl(baseUrl)
+    .client(client)
+    .addConverterFactory(GsonConverterFactory.create())
+    .build()
+
+fun provideOkHttpClient(): OkHttpClient =
     OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
@@ -20,14 +27,5 @@ private val client =
         .writeTimeout(20, TimeUnit.SECONDS)
         .build()
 
-private fun provideRetrofit(
-    baseUrl: String,
-    client: OkHttpClient
-) = Retrofit.Builder()
-    .baseUrl(baseUrl)
-    .client(client)
-    .addConverterFactory(GsonConverterFactory.create())
-    .build()
-
-val api = provideRetrofit(BASE_URL, client)
-    .create(EventAPI::class.java)
+fun provideEventsApi(retrofit: Retrofit): EventAPI =
+    retrofit.create(EventAPI::class.java)

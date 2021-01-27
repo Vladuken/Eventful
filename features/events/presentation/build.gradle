@@ -44,7 +44,6 @@ dependencies {
 
     //Project dependencies
     implementation project(":features:events:domain")
-    //TODO Add Di
     implementation project(":features:events:data")
 
     //Coroutines
@@ -54,5 +53,12 @@ dependencies {
     implementation "androidx.core:core-ktx:${rootProject.versions.android.ktx_core}"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${rootProject.versions.android.ktx_viewmodel}"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:${rootProject.versions.android.ktx_lifecycle}"
+
+
+    //Koin
+    implementation "org.koin:koin-android:${rootProject.versions.koin}"
+    implementation "org.koin:koin-android-scope:${rootProject.versions.koin}"
+    implementation "org.koin:koin-android-viewmodel:${rootProject.versions.koin}"
+    implementation "org.koin:koin-android-ext:${rootProject.versions.koin}"
 
 }

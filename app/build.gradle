@@ -20,6 +20,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            minifyEnabled false
+            buildConfigField "String", "BASE_URL", "\"http://api.eventful.com/\""
+            debuggable true
+        }
     }
 
     compileOptions {
@@ -34,7 +40,6 @@ android {
 }
 
 dependencies {
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${rootProject.versions.kotlin}"
 
     implementation "androidx.core:core-ktx:${rootProject.versions.android.core_ktx}"
@@ -42,5 +47,10 @@ dependencies {
     implementation "com.google.android.material:material:${rootProject.versions.android.material}"
     implementation "androidx.constraintlayout:constraintlayout:${rootProject.versions.android.constraintlayout}"
 
+    //Project
     implementation project(":features:events:presentation")
+
+    //Koin
+    implementation "org.koin:koin-android:${rootProject.versions.koin}"
+
 }
