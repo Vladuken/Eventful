@@ -34,11 +34,10 @@ class EventListFragment : Fragment() {
         binding.rvEvents.adapter = adapter
 
         lifecycleScope.launchWhenCreated {
-            viewModel.state.collect {
-                when (it) {
-                    is BaseEventListViewModel.EventsOutput.Success -> adapter.submitList(it.events)
-                    is BaseEventListViewModel.EventsOutput.Failure -> {
-                    }
+            viewModel.state.collect { output ->
+                when (output) {
+                    is BaseEventListViewModel.EventsOutput.Success -> adapter.submitList(output.events)
+                    is BaseEventListViewModel.EventsOutput.Failure -> output.error.printStackTrace()
                     is BaseEventListViewModel.EventsOutput.Loading -> {
                     }
                 }

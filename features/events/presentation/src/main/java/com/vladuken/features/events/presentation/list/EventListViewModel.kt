@@ -19,7 +19,7 @@ class EventListViewModel(
                 val items = fetchEventsUseCase.fetch()
                 state.value = EventsOutput.Success(items)
             } catch (e: Exception) {
-                state.value = EventsOutput.Failure
+                state.value = EventsOutput.Failure(e)
             }
         }
     }
