@@ -3,6 +3,7 @@ package com.vladuken.features.events.presentation.list
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import com.vladuken.features.events.domain.usecases.CachePagedEventsUseCase
 import com.vladuken.features.events.domain.usecases.FetchPagedEventsUseCase
 import com.vladuken.features.events.presentation.list.adapter.EventsPagingSource
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,7 +11,9 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class EventListViewModel(
-    fetchEventsUseCase: FetchPagedEventsUseCase
+    fetchNetworkEventsUseCase: FetchPagedEventsUseCase,
+    fetchCachedEventsUseCase: FetchPagedEventsUseCase,
+    cachePagedEventsUseCase: CachePagedEventsUseCase
 ) : BaseEventListViewModel() {
 
     override val state: MutableStateFlow<EventsOutput> =
@@ -23,7 +26,13 @@ class EventListViewModel(
 
     init {
         viewModelScope.launch {
-            Pager(config = defaultPagingConfig) { EventsPagingSource(fetchEventsUseCase) }
+            Pager(config = defaultPagingConfig) {
+                EventsPagingSource(
+                    fetchNetworkEventsUseCase,
+                    fetchCachedEventsUseCase,
+                    cachePagedEventsUseCase
+                )
+            }
                 .flow
                 .collect { state.value = EventsOutput.Success(it) }
         }
