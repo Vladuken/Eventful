@@ -1,6 +1,6 @@
-package com.vladuken.features.events.data.api
+package com.vladuken.features.events.data.network.api
 
-import com.vladuken.features.events.data.model.SearchEventsDto
+import com.vladuken.features.events.data.network.model.SearchEventsDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 

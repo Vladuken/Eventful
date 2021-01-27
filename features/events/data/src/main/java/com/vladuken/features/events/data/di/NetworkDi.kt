@@ -1,7 +1,7 @@
 package com.vladuken.features.events.data.di
 
 import com.google.gson.GsonBuilder
-import com.vladuken.features.events.data.api.EventAPI
+import com.vladuken.features.events.data.network.api.EventAPI
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

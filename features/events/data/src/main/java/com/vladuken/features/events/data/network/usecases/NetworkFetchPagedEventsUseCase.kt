@@ -1,6 +1,6 @@
 package com.vladuken.features.events.data.usecases
 
-import com.vladuken.features.events.data.api.EventAPI
+import com.vladuken.features.events.data.network.api.EventAPI
 import com.vladuken.features.events.domain.models.PagedEventList
 import com.vladuken.features.events.domain.usecases.FetchPagedEventsUseCase
 

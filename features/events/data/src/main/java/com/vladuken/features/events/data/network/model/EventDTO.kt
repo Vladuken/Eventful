@@ -1,4 +1,4 @@
-package com.vladuken.features.events.data.model
+package com.vladuken.features.events.data.network.model
 
 import com.vladuken.features.events.domain.models.Event
 import java.util.*
