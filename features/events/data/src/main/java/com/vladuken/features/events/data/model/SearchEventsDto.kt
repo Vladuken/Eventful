@@ -1,6 +1,6 @@
 package com.vladuken.features.events.data.model
 
-import com.vladuken.features.events.domain.models.Event
+import com.vladuken.features.events.domain.models.PagedEventList
 
 data class SearchEventsDto(
     val last_item: Any?,
@@ -14,7 +14,11 @@ data class SearchEventsDto(
 
     val events: EventListDTO
 ) {
-    fun toDomain(): List<Event> {
-        return events.event.map(EventDTO::toDomain)
+    fun toPagedDomain(): PagedEventList {
+        return PagedEventList(
+            events = events.event.map(EventDTO::toDomain),
+            currentPage = page_number,
+            pageCount = page_count
+        )
     }
 }
