@@ -1,26 +1,32 @@
 package com.vladuken.features.events.presentation.list
 
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import com.vladuken.features.events.domain.models.usecases.FetchEventsUseCase
+import com.vladuken.features.events.presentation.list.adapter.EventsPagingSource
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class EventListViewModel(
-    private val fetchEventsUseCase: FetchEventsUseCase
+    fetchEventsUseCase: FetchEventsUseCase
 ) : BaseEventListViewModel() {
 
     override val state: MutableStateFlow<EventsOutput> =
-        MutableStateFlow(EventsOutput.Success(emptyList()))
+        MutableStateFlow(EventsOutput.Loading)
+
+    private val defaultPagingConfig = PagingConfig(
+        pageSize = 10,
+        initialLoadSize = 20
+    )
 
     init {
         viewModelScope.launch {
-            try {
-                state.value = EventsOutput.Loading
-                val items = fetchEventsUseCase.fetch()
-                state.value = EventsOutput.Success(items)
-            } catch (e: Exception) {
-                state.value = EventsOutput.Failure(e)
-            }
+            Pager(config = defaultPagingConfig) { EventsPagingSource(fetchEventsUseCase) }
+                .flow
+                .collect { state.value = EventsOutput.Success(it) }
         }
     }
 }
+

@@ -36,7 +36,7 @@ class EventListFragment : Fragment() {
         lifecycleScope.launchWhenCreated {
             viewModel.state.collect { output ->
                 when (output) {
-                    is BaseEventListViewModel.EventsOutput.Success -> adapter.submitList(output.events)
+                    is BaseEventListViewModel.EventsOutput.Success -> adapter.submitData(output.events)
                     is BaseEventListViewModel.EventsOutput.Failure -> output.error.printStackTrace()
                     is BaseEventListViewModel.EventsOutput.Loading -> {
                     }
