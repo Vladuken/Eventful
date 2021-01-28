@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.vladuken.features.events.presentation.databinding.FragmentEventListBinding
 import com.vladuken.features.events.presentation.list.adapter.EventListAdapter
+import com.vladuken.features.events.presentation.list.adapter.LoadingStateAdapter
 import kotlinx.coroutines.flow.collect
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -31,7 +32,10 @@ class EventListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvEvents.adapter = adapter
+        binding.rvEvents.adapter = adapter.withLoadStateHeaderAndFooter(
+            LoadingStateAdapter(),
+            LoadingStateAdapter()
+        )
 
         lifecycleScope.launchWhenCreated {
             viewModel.state.collect { output ->

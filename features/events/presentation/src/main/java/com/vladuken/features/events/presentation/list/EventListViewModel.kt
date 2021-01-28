@@ -3,6 +3,7 @@ package com.vladuken.features.events.presentation.list
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import com.vladuken.features.events.domain.usecases.CachePagedEventsUseCase
 import com.vladuken.features.events.domain.usecases.FetchPagedEventsUseCase
 import com.vladuken.features.events.presentation.list.adapter.EventsPagingSource
@@ -34,6 +35,7 @@ class EventListViewModel(
                 )
             }
                 .flow
+                .cachedIn(viewModelScope)
                 .collect { state.value = EventsOutput.Success(it) }
         }
     }
