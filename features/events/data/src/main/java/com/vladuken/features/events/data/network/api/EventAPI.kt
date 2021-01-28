@@ -12,8 +12,7 @@ interface EventAPI {
         @Query("keywords") keyWords: String,
         @Query("location") locationString: String,
         @Query("date") dateString: String,
-        @Query("page_size") pageSize: Int,
-        @Query("page_number") pageNumber: Int
+        @Query("page_size") pageSize: Int
     ): SearchEventsDto
 
 }

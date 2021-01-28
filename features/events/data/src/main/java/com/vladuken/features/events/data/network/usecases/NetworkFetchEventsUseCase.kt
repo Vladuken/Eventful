@@ -9,14 +9,26 @@ class NetworkFetchEventsUseCase(
     private val eventApi: EventAPI
 ) : FetchEventsUseCase {
 
+    private val appKey = "CKKnt488bNT6HK2c"
+    private val keyWords = "books"
+    private val locationString = "San Diego"
+    private val dateString = "Future"
+
     override suspend fun invoke(): List<Event> {
+        val emptyRequest = eventApi.getEvents(
+            appKey = appKey,
+            keyWords = keyWords,
+            locationString = locationString,
+            dateString = dateString,
+            pageSize = 1,
+        )
+        
         return eventApi.getEvents(
             appKey = "CKKnt488bNT6HK2c",
             keyWords = "books",
             locationString = "San Diego",
             dateString = "Future",
-            pageSize = 100,
-            pageNumber = 1
+            pageSize = emptyRequest.total_items,
         ).toDomain()
     }
 
