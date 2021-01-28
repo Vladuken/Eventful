@@ -1,25 +1,17 @@
 package com.vladuken.features.events.presentation.di
 
-import com.vladuken.features.events.data.local.usecases.FetchAndCacheEventsUseCase
-import com.vladuken.features.events.data.local.usecases.RoomCacheEventsUseCase
-import com.vladuken.features.events.data.local.usecases.RoomClearCacheEventsUseCase
-import com.vladuken.features.events.data.local.usecases.RoomFetchEventsUseCase
+import android.content.Context
+import com.vladuken.features.events.data.local.usecases.*
 import com.vladuken.features.events.data.network.usecases.NetworkFetchEventsUseCase
 import com.vladuken.features.events.domain.usecases.FetchEventsUseCase
 import com.vladuken.features.events.domain.usecases.cache.CacheEventsUseCase
 import com.vladuken.features.events.domain.usecases.cache.ClearCacheEventsUseCase
+import org.koin.android.ext.koin.androidApplication
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 
 internal val useCaseModule = module {
-    single<FetchEventsUseCase>(named(StorageQualifier.NETWORK)) {
-        NetworkFetchEventsUseCase(eventApi = get())
-    }
-
-    single<FetchEventsUseCase>(named(StorageQualifier.LOCAL)) {
-        RoomFetchEventsUseCase(eventDao = get())
-    }
 
     single<CacheEventsUseCase> {
         RoomCacheEventsUseCase(eventDao = get())
@@ -29,13 +21,33 @@ internal val useCaseModule = module {
         RoomClearCacheEventsUseCase(eventDao = get())
     }
 
-    single<FetchEventsUseCase> {
+    //FetchEventsUseCases
+
+    single<FetchEventsUseCase>(named(FetchEventsUseCase.FetchType.NETWORK)) {
+        NetworkFetchEventsUseCase(eventApi = get())
+    }
+
+    single<FetchEventsUseCase>(named(FetchEventsUseCase.FetchType.LOCAL)) {
+        RoomFetchEventsUseCase(eventDao = get())
+    }
+
+    single<FetchEventsUseCase>(named(FetchEventsUseCase.FetchType.LOCAL_AND_NETWORK)) {
         FetchAndCacheEventsUseCase(
-            networkFetchEventsUseCase = get(named(StorageQualifier.NETWORK)),
-            localFetchEventsUseCase = get(named(StorageQualifier.LOCAL)),
-            cacheEventsUseCase = get()
+            networkFetchEventsUseCase = get(named(FetchEventsUseCase.FetchType.NETWORK)),
+            localFetchEventsUseCase = get(named(FetchEventsUseCase.FetchType.LOCAL)),
+            cacheEventsUseCase = get(),
         )
     }
 
+    single<FetchEventsUseCase>(named(FetchEventsUseCase.FetchType.CLEAR_AFTER_ONE_HOUR)) {
+        ClearCacheAfterTimeAndFetchEventsUseCase(
+            fetchEventsUseCase = get(named(FetchEventsUseCase.FetchType.LOCAL_AND_NETWORK)),
+            clearCacheEventsUseCase = get(),
+            sharedPreferences = androidApplication().getSharedPreferences(
+                "FetchAndCacheEventsUseCase",
+                Context.MODE_PRIVATE
+            )
+        )
+    }
 
 }
