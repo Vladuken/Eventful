@@ -22,7 +22,7 @@ class NetworkFetchEventsUseCase(
             dateString = dateString,
             pageSize = 1,
         )
-        
+
         return eventApi.getEvents(
             appKey = "CKKnt488bNT6HK2c",
             keyWords = "books",

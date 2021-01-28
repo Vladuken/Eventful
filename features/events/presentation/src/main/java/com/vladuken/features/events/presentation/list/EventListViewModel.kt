@@ -6,13 +6,21 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class EventListViewModel(
-    fetchEventsUseCase: FetchEventsUseCase
+    private val fetchEventsUseCase: FetchEventsUseCase
 ) : BaseEventListViewModel() {
 
     override val state: MutableStateFlow<EventsOutput> =
         MutableStateFlow(EventsOutput.Loading)
 
     init {
+        fetchEvents()
+    }
+
+    override fun refresh() {
+        fetchEvents()
+    }
+
+    private fun fetchEvents() {
         viewModelScope.launch {
             try {
                 state.value = EventsOutput.Loading
@@ -22,6 +30,5 @@ class EventListViewModel(
             }
         }
     }
-
 }
 

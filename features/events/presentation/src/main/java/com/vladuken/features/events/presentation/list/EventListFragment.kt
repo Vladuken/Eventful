@@ -1,6 +1,5 @@
 package com.vladuken.features.events.presentation.list
 
-import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,31 +33,28 @@ class EventListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.rvEvents.adapter = adapter
-
-
-        //TODO remove and change for alert dialog
-        val dialog = ProgressDialog(requireContext())
-            .apply {
-                setMessage("Please wait...")
-                setCancelable(false)
-            }
+        binding.swipeToRefresh.setOnRefreshListener {
+            viewModel.refresh()
+        }
 
         lifecycleScope.launchWhenCreated {
             viewModel.state.collect { output ->
                 when (output) {
                     is BaseEventListViewModel.EventsOutput.Success -> {
-                        dialog.hide()
+                        binding.swipeToRefresh.isRefreshing = false
                         adapter.submitList(output.events)
                     }
                     is BaseEventListViewModel.EventsOutput.Failure -> {
-                        dialog.hide()
+                        binding.swipeToRefresh.isRefreshing = false
                         output.error.printStackTrace()
                     }
                     is BaseEventListViewModel.EventsOutput.Loading -> {
-                        dialog.show()
+                        binding.swipeToRefresh.isRefreshing = true
                     }
                 }
             }
         }
+
     }
+
 }

@@ -8,6 +8,8 @@ abstract class BaseEventListViewModel : ViewModel() {
 
     abstract val state: StateFlow<EventsOutput>
 
+    abstract fun refresh()
+
     sealed class EventsOutput {
         data class Success(val events: List<Event>) : EventsOutput()
         data class Failure(val error: Throwable) : EventsOutput()
