@@ -8,6 +8,9 @@ import com.vladuken.features.events.data.local.model.RoomEvent
 @Dao
 abstract class RoomEventDao {
 
+    @Query("SELECT * FROM roomevent")
+    abstract suspend fun readAll(): List<RoomEvent>
+
     @Insert
     abstract suspend fun insertAll(events: List<RoomEvent>)
 

@@ -7,19 +7,24 @@ import java.util.*
 
 @Entity
 data class RoomEvent(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey
+    val id: String,
     val title: String,
     val date: Long,
 ) {
 
     fun toDomain(): Event {
-        return Event(title, Date(date))
+        return Event(
+            id = id,
+            title = title,
+            date = Date(date)
+        )
     }
 
     companion object {
-        private fun from(event: Event): RoomEvent {
+        fun from(event: Event): RoomEvent {
             return RoomEvent(
+                id = event.id,
                 title = event.title,
                 date = event.date.time,
             )
