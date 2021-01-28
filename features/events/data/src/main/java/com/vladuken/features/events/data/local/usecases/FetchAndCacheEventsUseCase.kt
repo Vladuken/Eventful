@@ -1,7 +1,7 @@
 package com.vladuken.features.events.data.local.usecases
 
 import com.vladuken.features.events.domain.models.Event
-import com.vladuken.features.events.domain.usecases.CacheEventsUseCase
+import com.vladuken.features.events.domain.usecases.cache.CacheEventsUseCase
 import com.vladuken.features.events.domain.usecases.FetchEventsUseCase
 
 

@@ -2,10 +2,12 @@ package com.vladuken.features.events.presentation.di
 
 import com.vladuken.features.events.data.local.usecases.FetchAndCacheEventsUseCase
 import com.vladuken.features.events.data.local.usecases.RoomCacheEventsUseCase
+import com.vladuken.features.events.data.local.usecases.RoomClearCacheEventsUseCase
 import com.vladuken.features.events.data.local.usecases.RoomFetchEventsUseCase
 import com.vladuken.features.events.data.network.usecases.NetworkFetchEventsUseCase
-import com.vladuken.features.events.domain.usecases.CacheEventsUseCase
 import com.vladuken.features.events.domain.usecases.FetchEventsUseCase
+import com.vladuken.features.events.domain.usecases.cache.CacheEventsUseCase
+import com.vladuken.features.events.domain.usecases.cache.ClearCacheEventsUseCase
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -21,6 +23,10 @@ internal val useCaseModule = module {
 
     single<CacheEventsUseCase> {
         RoomCacheEventsUseCase(eventDao = get())
+    }
+
+    single<ClearCacheEventsUseCase> {
+        RoomClearCacheEventsUseCase(eventDao = get())
     }
 
     single<FetchEventsUseCase> {

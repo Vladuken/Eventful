@@ -8,6 +8,9 @@ import org.koin.dsl.module
 
 internal val viewModelModule = module {
     viewModel<BaseEventListViewModel> {
-        EventListViewModel(fetchEventsUseCase = get())
+        EventListViewModel(
+            fetchEventsUseCase = get(),
+            clearCacheEventsUseCase = get()
+        )
     }
 }
