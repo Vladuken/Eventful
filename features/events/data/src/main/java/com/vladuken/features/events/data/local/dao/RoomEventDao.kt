@@ -8,9 +8,6 @@ import com.vladuken.features.events.data.local.model.RoomEvent
 @Dao
 abstract class RoomEventDao {
 
-    @Query("SELECT * FROM roomevent WHERE currentPage=:currentPage")
-    abstract suspend fun fetchPage(currentPage: Int): List<RoomEvent>
-
     @Insert
     abstract suspend fun insertAll(events: List<RoomEvent>)
 

@@ -61,9 +61,4 @@ dependencies {
     implementation "org.koin:koin-android-viewmodel:${rootProject.versions.koin}"
     implementation "org.koin:koin-android-ext:${rootProject.versions.koin}"
 
-
-    //Paging
-    def paging_version = "3.0.0-alpha12"
-    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
-
 }
