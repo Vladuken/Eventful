@@ -23,7 +23,7 @@ internal val useCaseModule = module {
     }
 
     single<UpdateCacheEventUseCase> {
-        RoomUpdateCacheEventUseCase(eventDao = get())
+        RoomUpdateCacheEventUseCase(favoriteEventDao = get())
     }
 
     //FetchEventsUseCases
@@ -33,7 +33,7 @@ internal val useCaseModule = module {
     }
 
     single<FetchEventsUseCase>(named(FetchEventsUseCase.FetchType.LOCAL)) {
-        RoomFetchEventsUseCase(eventDao = get())
+        RoomFetchEventsUseCase(eventDao = get(), favoriteEventDao = get())
     }
 
     single<FetchEventsUseCase>(named(FetchEventsUseCase.FetchType.LOCAL_AND_NETWORK)) {

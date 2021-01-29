@@ -6,7 +6,7 @@ import com.vladuken.features.events.domain.models.Event
 import java.util.*
 
 @Entity
-data class RoomEvent(
+data class RoomFavoriteEvent(
     @PrimaryKey
     val id: String,
     val title: String,
@@ -18,13 +18,13 @@ data class RoomEvent(
             id = id,
             title = title,
             date = Date(date),
-            isFavorite = false
+            isFavorite = true
         )
     }
 
     companion object {
-        fun from(event: Event): RoomEvent {
-            return RoomEvent(
+        fun from(event: Event): RoomFavoriteEvent {
+            return RoomFavoriteEvent(
                 id = event.id,
                 title = event.title,
                 date = event.date.time,

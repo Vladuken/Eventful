@@ -1,6 +1,7 @@
 package com.vladuken.features.events.presentation.list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +46,13 @@ class EventListFragment : Fragment() {
                     is BaseEventListViewModel.EventsOutput.Success -> {
                         binding.swipeToRefresh.isRefreshing = false
                         adapter.submitList(output.events)
+                        Log.d(
+                            "KEK", "${
+                                output.events
+                                    .filter { it.isFavorite }
+                                    .map { it.id }
+                            }"
+                        )
                     }
                     is BaseEventListViewModel.EventsOutput.Failure -> {
                         binding.swipeToRefresh.isRefreshing = false
