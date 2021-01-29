@@ -12,7 +12,8 @@ data class EventDTO(
         return Event(
             id = id,
             title = title,
-            date = start_time
+            date = start_time,
+            isFavorite = false
         )
     }
 }

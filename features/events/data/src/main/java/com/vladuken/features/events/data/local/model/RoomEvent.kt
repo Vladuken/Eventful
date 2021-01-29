@@ -11,13 +11,15 @@ data class RoomEvent(
     val id: String,
     val title: String,
     val date: Long,
+    val isFavorite: Boolean
 ) {
 
     fun toDomain(): Event {
         return Event(
             id = id,
             title = title,
-            date = Date(date)
+            date = Date(date),
+            isFavorite = isFavorite
         )
     }
 
@@ -27,6 +29,7 @@ data class RoomEvent(
                 id = event.id,
                 title = event.title,
                 date = event.date.time,
+                isFavorite = event.isFavorite
             )
         }
 

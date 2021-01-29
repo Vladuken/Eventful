@@ -12,7 +12,8 @@ internal val viewModelModule = module {
     viewModel<BaseEventListViewModel> {
         EventListViewModel(
             fetchEventsUseCase = get(named(FetchEventsUseCase.FetchType.CLEAR_AFTER_ONE_HOUR)),
-            clearCacheEventsUseCase = get()
+            clearCacheEventsUseCase = get(),
+            updateEventUseCase = get()
         )
     }
 }

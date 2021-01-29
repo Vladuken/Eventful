@@ -10,12 +10,17 @@ import java.util.*
 private val simpleDateFormatter = SimpleDateFormat("EEE, dd MMM yyyy HH:mm", Locale.ROOT)
 
 class EventViewHolder(
-    private val binding: ItemEventBinding
+    private val binding: ItemEventBinding,
+    private val onToggleClicked: (Event) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(event: Event) {
-        binding.tvEventTitle.text = event.title
-        binding.tvEventDate.text = simpleDateFormatter.format(event.date)
+        with(binding) {
+            tvEventTitle.text = event.title
+            tvEventDate.text = simpleDateFormatter.format(event.date)
+            tbEventIsFavorite.isChecked = event.isFavorite
+            tbEventIsFavorite.setOnClickListener { onToggleClicked(event) }
+        }
     }
 
 }

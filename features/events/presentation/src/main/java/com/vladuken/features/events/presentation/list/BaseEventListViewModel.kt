@@ -10,6 +10,8 @@ abstract class BaseEventListViewModel : ViewModel() {
 
     abstract fun refresh()
 
+    abstract fun toggleEvent(event: Event)
+
     sealed class EventsOutput {
         data class Success(val events: List<Event>) : EventsOutput()
         data class Failure(val error: Throwable) : EventsOutput()

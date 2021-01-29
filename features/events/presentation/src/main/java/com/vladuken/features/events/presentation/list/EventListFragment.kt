@@ -18,7 +18,9 @@ class EventListFragment : Fragment() {
 
     private val viewModel by viewModel<BaseEventListViewModel>()
 
-    private val adapter = EventListAdapter()
+    private val adapter = EventListAdapter {
+        viewModel.toggleEvent(it)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

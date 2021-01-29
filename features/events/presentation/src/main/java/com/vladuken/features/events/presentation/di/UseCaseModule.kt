@@ -6,6 +6,7 @@ import com.vladuken.features.events.data.network.usecases.NetworkFetchEventsUseC
 import com.vladuken.features.events.domain.usecases.FetchEventsUseCase
 import com.vladuken.features.events.domain.usecases.cache.CacheEventsUseCase
 import com.vladuken.features.events.domain.usecases.cache.ClearCacheEventsUseCase
+import com.vladuken.features.events.domain.usecases.cache.UpdateCacheEventUseCase
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -19,6 +20,10 @@ internal val useCaseModule = module {
 
     single<ClearCacheEventsUseCase> {
         RoomClearCacheEventsUseCase(eventDao = get())
+    }
+
+    single<UpdateCacheEventUseCase> {
+        RoomUpdateCacheEventUseCase(eventDao = get())
     }
 
     //FetchEventsUseCases
