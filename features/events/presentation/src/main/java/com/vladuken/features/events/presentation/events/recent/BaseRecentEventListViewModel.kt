@@ -1,11 +1,11 @@
-package com.vladuken.features.events.presentation.list
+package com.vladuken.features.events.presentation.events.recent
 
 import androidx.lifecycle.ViewModel
 import com.vladuken.features.events.domain.models.Event
 import com.vladuken.features.events.presentation.model.itemcallbacks.entity.FavoriteEvent
 import kotlinx.coroutines.flow.StateFlow
 
-abstract class BaseEventListViewModel : ViewModel() {
+abstract class BaseRecentEventListViewModel : ViewModel() {
 
     abstract val state: StateFlow<EventsOutput>
 

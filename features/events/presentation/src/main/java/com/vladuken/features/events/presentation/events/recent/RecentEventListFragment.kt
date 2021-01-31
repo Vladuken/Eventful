@@ -1,4 +1,4 @@
-package com.vladuken.features.events.presentation.list
+package com.vladuken.features.events.presentation.events.recent
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,17 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.vladuken.features.events.presentation.databinding.FragmentEventListBinding
-import com.vladuken.features.events.presentation.list.adapter.FavoriteEventListAdapter
+import com.vladuken.features.events.presentation.databinding.FragmentRecentEventListBinding
+import com.vladuken.features.events.presentation.events.adapter.FavoriteEventListAdapter
 import kotlinx.coroutines.flow.collect
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
-class EventListFragment : Fragment() {
+class RecentEventListFragment : Fragment() {
 
-    private lateinit var binding: FragmentEventListBinding
+    private lateinit var binding: FragmentRecentEventListBinding
 
-    private val viewModel by viewModel<BaseEventListViewModel>()
+    private val viewModel by viewModel<BaseRecentEventListViewModel>()
 
     private val adapter = FavoriteEventListAdapter {
         viewModel.toggleEvent(it)
@@ -27,7 +27,7 @@ class EventListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentEventListBinding.inflate(inflater, container, false)
+        binding = FragmentRecentEventListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -42,16 +42,16 @@ class EventListFragment : Fragment() {
         lifecycleScope.launchWhenCreated {
             viewModel.state.collect { output ->
                 when (output) {
-                    is BaseEventListViewModel.EventsOutput.Success -> {
+                    is BaseRecentEventListViewModel.EventsOutput.Success -> {
                         binding.swipeToRefresh.isRefreshing = false
                         adapter.submitList(output.events)
                     }
-                    is BaseEventListViewModel.EventsOutput.Failure -> {
+                    is BaseRecentEventListViewModel.EventsOutput.Failure -> {
                         binding.swipeToRefresh.isRefreshing = false
                         //TODO process error
                         output.error.printStackTrace()
                     }
-                    is BaseEventListViewModel.EventsOutput.Loading -> {
+                    is BaseRecentEventListViewModel.EventsOutput.Loading -> {
                         binding.swipeToRefresh.isRefreshing = true
                     }
                 }

@@ -1,4 +1,4 @@
-package com.vladuken.features.events.presentation.list
+package com.vladuken.features.events.presentation.events.recent
 
 import androidx.lifecycle.viewModelScope
 import com.vladuken.features.events.domain.models.Event
@@ -10,12 +10,12 @@ import com.vladuken.features.events.presentation.model.itemcallbacks.entity.Favo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class EventListViewModel(
+class RecentEventListViewModel(
     private val fetchRecentEventsUseCase: FetchRecentEventsUseCase,
     private val fetchFavoriteEventsUseCase: FetchFavoriteEventsUseCase,
     private val clearCacheRecentEventsUseCase: ClearCacheRecentEventsUseCase,
     private val toggleEventUseCase: ToggleFavoriteEventUseCase
-) : BaseEventListViewModel() {
+) : BaseRecentEventListViewModel() {
 
 
     override val state: MutableStateFlow<EventsOutput> =
