@@ -1,14 +1,14 @@
-package com.vladuken.features.events.data.local.usecases
+package com.vladuken.features.events.data.local.usecases.favorite
 
 import com.vladuken.features.events.data.local.dao.RoomEventDao
 import com.vladuken.features.events.data.local.model.RoomEvent
 import com.vladuken.features.events.domain.models.Event
-import com.vladuken.features.events.domain.usecases.FetchEventsUseCase
+import com.vladuken.features.events.domain.usecases.FetchRecentEventsUseCase
 
 
-class RoomFetchEventsUseCase(
+class RoomFetchRecentEventsUseCase(
     private val eventDao: RoomEventDao
-) : FetchEventsUseCase {
+) : FetchRecentEventsUseCase {
 
     override suspend fun invoke(): List<Event> {
         return eventDao.readAll()

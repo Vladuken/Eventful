@@ -1,5 +1,5 @@
 package com.vladuken.features.events.domain.usecases.cache
 
-interface ClearCacheEventsUseCase {
+interface ClearCacheRecentEventsUseCase {
     suspend operator fun invoke()
 }

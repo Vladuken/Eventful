@@ -5,6 +5,5 @@ import java.util.*
 data class Event(
     val id: String,
     val title: String,
-    val date: Date,
-    val isFavorite: Boolean
+    val date: Date
 )

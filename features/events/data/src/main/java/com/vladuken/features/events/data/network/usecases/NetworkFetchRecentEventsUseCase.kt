@@ -2,12 +2,12 @@ package com.vladuken.features.events.data.network.usecases
 
 import com.vladuken.features.events.data.network.api.EventAPI
 import com.vladuken.features.events.domain.models.Event
-import com.vladuken.features.events.domain.usecases.FetchEventsUseCase
+import com.vladuken.features.events.domain.usecases.FetchRecentEventsUseCase
 
 
-class NetworkFetchEventsUseCase(
+class NetworkFetchRecentEventsUseCase(
     private val eventApi: EventAPI
-) : FetchEventsUseCase {
+) : FetchRecentEventsUseCase {
 
     private val appKey = "CKKnt488bNT6HK2c"
     private val keyWords = "books"

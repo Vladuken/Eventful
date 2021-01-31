@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.vladuken.features.events.presentation.databinding.FragmentEventListBinding
-import com.vladuken.features.events.presentation.list.adapter.EventListAdapter
+import com.vladuken.features.events.presentation.list.adapter.FavoriteEventListAdapter
 import kotlinx.coroutines.flow.collect
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -18,7 +18,7 @@ class EventListFragment : Fragment() {
 
     private val viewModel by viewModel<BaseEventListViewModel>()
 
-    private val adapter = EventListAdapter {
+    private val adapter = FavoriteEventListAdapter {
         viewModel.toggleEvent(it)
     }
 
@@ -48,6 +48,7 @@ class EventListFragment : Fragment() {
                     }
                     is BaseEventListViewModel.EventsOutput.Failure -> {
                         binding.swipeToRefresh.isRefreshing = false
+                        //TODO process error
                         output.error.printStackTrace()
                     }
                     is BaseEventListViewModel.EventsOutput.Loading -> {
