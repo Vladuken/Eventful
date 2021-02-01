@@ -2,12 +2,8 @@ package com.vladuken.features.events.presentation.di
 
 import android.content.Context
 import com.vladuken.features.events.data.local.usecases.favorite.RoomFetchFavoriteEventsUseCase
-import com.vladuken.features.events.data.local.usecases.favorite.RoomFetchRecentEventsUseCase
 import com.vladuken.features.events.data.local.usecases.favorite.RoomToggleFavoriteEventUseCase
-import com.vladuken.features.events.data.local.usecases.recent.ClearCacheAfterTimeAndFetchRecentEventsUseCase
-import com.vladuken.features.events.data.local.usecases.recent.FetchAndCacheRecentEventsUseCase
-import com.vladuken.features.events.data.local.usecases.recent.RoomCacheRecentEventsUseCase
-import com.vladuken.features.events.data.local.usecases.recent.RoomClearCacheRecentEventsUseCase
+import com.vladuken.features.events.data.local.usecases.recent.*
 import com.vladuken.features.events.data.network.usecases.NetworkFetchRecentEventsUseCase
 import com.vladuken.features.events.domain.usecases.FetchFavoriteEventsUseCase
 import com.vladuken.features.events.domain.usecases.FetchRecentEventsUseCase
