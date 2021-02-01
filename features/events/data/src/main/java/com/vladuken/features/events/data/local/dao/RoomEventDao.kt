@@ -12,7 +12,7 @@ abstract class RoomEventDao {
     @Query("SELECT * FROM roomevent")
     abstract suspend fun readAll(): List<RoomEvent>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertAll(events: List<RoomEvent>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
