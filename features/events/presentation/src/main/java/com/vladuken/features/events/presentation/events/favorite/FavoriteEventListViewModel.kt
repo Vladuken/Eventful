@@ -1,20 +1,16 @@
-package com.vladuken.features.events.presentation.events.recent
+package com.vladuken.features.events.presentation.events.favorite
 
 import androidx.lifecycle.viewModelScope
 import com.vladuken.features.events.domain.models.Event
 import com.vladuken.features.events.domain.usecases.FetchFavoriteEventsUseCase
-import com.vladuken.features.events.domain.usecases.FetchRecentEventsUseCase
-import com.vladuken.features.events.domain.usecases.cache.ClearCacheRecentEventsUseCase
 import com.vladuken.features.events.domain.usecases.cache.ToggleFavoriteEventUseCase
 import com.vladuken.features.events.presentation.events.BaseRecentEventListViewModel
 import com.vladuken.features.events.presentation.model.itemcallbacks.entity.FavoriteEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class RecentEventListViewModel(
-    private val fetchRecentEventsUseCase: FetchRecentEventsUseCase,
+class FavoriteEventListViewModel(
     private val fetchFavoriteEventsUseCase: FetchFavoriteEventsUseCase,
-    private val clearCacheRecentEventsUseCase: ClearCacheRecentEventsUseCase,
     private val toggleEventUseCase: ToggleFavoriteEventUseCase
 ) : BaseRecentEventListViewModel() {
 
@@ -30,7 +26,6 @@ class RecentEventListViewModel(
 
     override fun refresh() {
         viewModelScope.launch {
-            clearCacheRecentEventsUseCase()
             fetchEvents()
         }
     }
@@ -45,15 +40,9 @@ class RecentEventListViewModel(
     private suspend fun fetchEvents() {
         try {
             state.value = EventsOutput.Loading
-
             val favoriteEvents = fetchFavoriteEventsUseCase()
-            val recentEvents = fetchRecentEventsUseCase()
-
-            val events = recentEvents.map {
-                FavoriteEvent(it, favoriteEvents.contains(it))
-            }
-
-            state.value = EventsOutput.Success(events)
+                .map { FavoriteEvent(it, true) }
+            state.value = EventsOutput.Success(favoriteEvents)
         } catch (t: Throwable) {
             state.value = EventsOutput.Failure(t)
         }

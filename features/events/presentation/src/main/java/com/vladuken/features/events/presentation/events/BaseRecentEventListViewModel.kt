@@ -1,4 +1,4 @@
-package com.vladuken.features.events.presentation.events.recent
+package com.vladuken.features.events.presentation.events
 
 import androidx.lifecycle.ViewModel
 import com.vladuken.features.events.domain.models.Event
@@ -19,4 +19,8 @@ abstract class BaseRecentEventListViewModel : ViewModel() {
         object Loading : EventsOutput()
     }
 
+
+    enum class Strategy {
+        RECENT, FAVORITE
+    }
 }

@@ -1,4 +1,4 @@
-package com.vladuken.features.events.presentation.events.recent
+package com.vladuken.features.events.presentation.events.favorite
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,20 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.vladuken.features.events.presentation.databinding.FragmentRecentEventListBinding
+import com.vladuken.features.events.presentation.databinding.FragmentFavoriteEventListBinding
 import com.vladuken.features.events.presentation.events.BaseRecentEventListViewModel
 import com.vladuken.features.events.presentation.events.adapter.FavoriteEventListAdapter
 import kotlinx.coroutines.flow.collect
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
 
+//TODO Maybe use recent event list fragment - they are almost the same
 
-class RecentEventListFragment : Fragment() {
+class FavoriteEventListFragment : Fragment() {
 
-    private lateinit var binding: FragmentRecentEventListBinding
+    private lateinit var binding: FragmentFavoriteEventListBinding
 
     private val viewModel by viewModel<BaseRecentEventListViewModel>(
-        named(BaseRecentEventListViewModel.Strategy.RECENT)
+        named(BaseRecentEventListViewModel.Strategy.FAVORITE)
     )
 
     private val adapter = FavoriteEventListAdapter {
@@ -31,7 +32,7 @@ class RecentEventListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentRecentEventListBinding.inflate(inflater, container, false)
+        binding = FragmentFavoriteEventListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -39,24 +40,19 @@ class RecentEventListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.rvEvents.adapter = adapter
-        binding.swipeToRefresh.setOnRefreshListener {
-            viewModel.refresh()
-        }
 
         lifecycleScope.launchWhenCreated {
             viewModel.state.collect { output ->
                 when (output) {
                     is BaseRecentEventListViewModel.EventsOutput.Success -> {
-                        binding.swipeToRefresh.isRefreshing = false
                         adapter.submitList(output.events)
                     }
                     is BaseRecentEventListViewModel.EventsOutput.Failure -> {
-                        binding.swipeToRefresh.isRefreshing = false
                         //TODO process error
                         output.error.printStackTrace()
                     }
                     is BaseRecentEventListViewModel.EventsOutput.Loading -> {
-                        binding.swipeToRefresh.isRefreshing = true
+                        //TODO process loading
                     }
                 }
             }
