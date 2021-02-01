@@ -1,5 +1,7 @@
 package com.vladuken.features.events.presentation.events.favorite
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,10 +24,14 @@ class FavoriteEventListFragment : Fragment() {
     private val viewModel by viewModel<BaseRecentEventListViewModel>(
         named(BaseRecentEventListViewModel.Strategy.FAVORITE)
     )
-
-    private val adapter = FavoriteEventListAdapter {
-        viewModel.toggleEvent(it)
-    }
+    
+    private val adapter = FavoriteEventListAdapter(
+        onToggleClicked = { viewModel.toggleEvent(it) },
+        onEventClicked = {
+            val openEventInBrowserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(it.url))
+            startActivity(openEventInBrowserIntent)
+        }
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,

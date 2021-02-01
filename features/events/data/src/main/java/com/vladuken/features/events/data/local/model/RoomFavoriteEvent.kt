@@ -11,6 +11,7 @@ data class RoomFavoriteEvent(
     val id: String,
     val title: String,
     val date: Long,
+    val url: String
 ) {
 
     fun toDomain(): Event {
@@ -18,6 +19,7 @@ data class RoomFavoriteEvent(
             id = id,
             title = title,
             date = Date(date),
+            url = url
         )
     }
 
@@ -27,6 +29,7 @@ data class RoomFavoriteEvent(
                 id = event.id,
                 title = event.title,
                 date = event.date.time,
+                url = event.url
             )
         }
     }

@@ -9,7 +9,7 @@ import com.vladuken.features.events.data.local.model.RoomFavoriteEvent
 
 @Database(
     entities = [RoomEvent::class, RoomFavoriteEvent::class],
-    version = 1
+    version = 2
 )
 abstract class EventfullRoomDb : RoomDatabase() {
 

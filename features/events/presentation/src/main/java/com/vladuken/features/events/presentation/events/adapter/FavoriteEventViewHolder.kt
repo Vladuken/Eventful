@@ -12,11 +12,13 @@ private val simpleDateFormatter = SimpleDateFormat("EEE, dd MMM yyyy HH:mm", Loc
 
 class FavoriteEventViewHolder(
     private val binding: ItemFavoriteEventBinding,
-    private val onToggleClicked: (Event) -> Unit
+    private val onToggleClicked: (Event) -> Unit,
+    private val onEventClicked: (Event) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(favoriteEvent: FavoriteEvent) {
         with(binding) {
+            binding.root.setOnClickListener { onEventClicked(favoriteEvent.event) }
             tvEventTitle.text = favoriteEvent.event.title
             tvEventDate.text = simpleDateFormatter.format(favoriteEvent.event.date)
             tbEventIsFavorite.isChecked = favoriteEvent.isFavorite

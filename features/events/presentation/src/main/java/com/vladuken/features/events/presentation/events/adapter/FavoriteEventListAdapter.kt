@@ -9,7 +9,8 @@ import com.vladuken.features.events.presentation.model.itemcallbacks.FavoriteEve
 import com.vladuken.features.events.presentation.model.itemcallbacks.entity.FavoriteEvent
 
 class FavoriteEventListAdapter(
-    private val onToggleClicked: (Event) -> Unit
+    private val onToggleClicked: (Event) -> Unit,
+    private val onEventClicked: (Event) -> Unit
 ) : ListAdapter<FavoriteEvent, FavoriteEventViewHolder>(FavoriteEventItemCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteEventViewHolder {
@@ -18,7 +19,7 @@ class FavoriteEventListAdapter(
             parent,
             false
         )
-        return FavoriteEventViewHolder(binding, onToggleClicked)
+        return FavoriteEventViewHolder(binding, onToggleClicked, onEventClicked)
     }
 
     override fun onBindViewHolder(holder: FavoriteEventViewHolder, position: Int) {
